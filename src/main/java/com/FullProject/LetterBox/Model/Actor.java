@@ -19,5 +19,6 @@ public class Actor {
     @ManyToMany(mappedBy = "actors")
     private List<Movie> movies;
     private Integer dick;
+    private Integer abc;
 
 }
