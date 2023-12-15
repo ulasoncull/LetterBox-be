@@ -18,5 +18,6 @@ public class Actor {
     private String dateOfBirth;
     @ManyToMany(mappedBy = "actors")
     private List<Movie> movies;
+    private Integer dick;
 
 }
