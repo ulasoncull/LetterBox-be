@@ -1,11 +1,17 @@
 package com.FullProject.LetterBox.Model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-public class Like {
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Liked {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;

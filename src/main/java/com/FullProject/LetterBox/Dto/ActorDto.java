@@ -1,6 +1,8 @@
-package com.FullProject.LetterBox.Model;
+package com.FullProject.LetterBox.Dto;
 
-import jakarta.persistence.*;
+import com.FullProject.LetterBox.Model.Gender;
+import com.FullProject.LetterBox.Model.Movie;
+import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,20 +11,16 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
-@Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class Director {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ActorDto {
     private Long Id;
     private String name;
     private String surname;
     private String wikipediaUrl;
     private Gender gender;
     private String dateOfBirth;
-    @OneToMany(mappedBy = "director",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Movie> movies;
 
 }
