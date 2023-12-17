@@ -8,7 +8,6 @@ import com.FullProject.LetterBox.Model.User;
 import com.FullProject.LetterBox.Repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,34 +16,44 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserDtoConverter userDtoConverter;
 
+
     
-    public UserService(UserRepository userRepository, UserDtoConverter userDtoConverter, UserNotFoundException userNotFoundException) {
+    public UserService(UserRepository userRepository, UserDtoConverter userDtoConverter) {
 
         this.userRepository = userRepository;
         this.userDtoConverter = userDtoConverter;
 
-    }
 
+    }
 
     public UserDto create(CreateUserRequest createUserRequest){
         User user = User.builder()
-                .Id(createUserRequest.getId())
                 .userName(createUserRequest.getUserName())
                 .email(createUserRequest.getEmail()).build();
 
         return userDtoConverter.convert(userRepository.save(user));
     }
+
     public void delete(Long Id){
         userRepository.deleteById(Id);
     }
 
     public UserDto getUser(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not founded by"+id));
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("sdadsad"));
         return userDtoConverter.convert(user);
     }
+    public User getUserByUsername(String username) {
+        return userRepository.findUserByUsername(username).orElseThrow(() -> new UserNotFoundException("user not found!"));
+
+    }
+
     public List<UserDto> getAllUsers(){
         return userRepository.findAll(). stream()
                 .map(userDtoConverter::convert)
                 .collect(Collectors.toList());
     }
+    protected boolean isUserContains(final List<User> list, final String username) {
+        return list.stream().anyMatch(o -> o.getUserName().equals(username));
+    }
+
 }
