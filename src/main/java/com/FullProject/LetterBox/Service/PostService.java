@@ -49,7 +49,7 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    private Post removeLike(LikeRequest likeRequest) {
+    public Post removeLike(LikeRequest likeRequest) {
         Post post = getPostById(likeRequest.getPost().getId());
         User postOfUser = post.getUser();
         User unLikedUser = userService.getUserByUsername(likeRequest.getUser().getUserName());
