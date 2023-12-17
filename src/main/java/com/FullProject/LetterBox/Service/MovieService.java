@@ -1,5 +1,6 @@
 package com.FullProject.LetterBox.Service;
 
+import com.FullProject.LetterBox.Exception.MovieNotFoundException;
 import com.FullProject.LetterBox.Model.Movie;
 import com.FullProject.LetterBox.Repository.MovieRepository;
 
@@ -22,4 +23,14 @@ public class MovieService {
     public List<Movie> getAllMovies(){
         return movieRepository.findAll();
     }
+
+    public Movie getMovieById(Long id){
+        return movieRepository.findById(id).orElseThrow(() -> new MovieNotFoundException("Movie could not be found"));
+    }
+
+    public Movie getMovieByTitle(String title){
+        return (Movie) movieRepository.findByUserName(title).orElseThrow(() -> new MovieNotFoundException("DSFS"));
+    }
+
+
 }
