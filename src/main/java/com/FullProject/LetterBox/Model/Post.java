@@ -24,8 +24,7 @@ public class Post {
     @ManyToOne(cascade =CascadeType.ALL,  fetch = FetchType.LAZY)
     @JoinColumn(name = "user_Id", insertable = false, updatable = false)
     private User user;
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Liked> likes;
+    private List<User> likedUsers;
     @ManyToOne(cascade =CascadeType.ALL,  fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_Id", insertable = false, updatable = false)
     private Movie movie;
