@@ -29,7 +29,7 @@ public class MovieService {
     }
 
     public Movie getMovieByTitle(String title){
-        return (Movie) movieRepository.findByUserName(title).orElseThrow(() -> new MovieNotFoundException("DSFS"));
+        return (Movie) movieRepository.findByUserName(title).orElseThrow(() -> new MovieNotFoundException("Movie could not be found"));
     }
 
 
