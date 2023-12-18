@@ -34,9 +34,10 @@ public class PostService {
         User user = userService.getUserByUsername(post.getUser().getUserName());
         post.setUser(user);
         post.setCreateDate(LocalDateTime.now());
-        post.setLikedUsers(new ArrayList<>());
+        //post.setLikedUsers(new ArrayList<>());
         return postRepository.save(post);
     }
+
     public Post addLike(LikeRequest likeRequest){
         Post post = getPostById(likeRequest.getPost().getId());
         User postOfUser = post.getUser();

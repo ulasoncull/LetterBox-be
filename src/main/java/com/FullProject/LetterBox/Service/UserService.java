@@ -43,7 +43,7 @@ public class UserService {
         return userDtoConverter.convert(user);
     }
     public User getUserByUsername(String username) {
-        return userRepository.findUserByUsername(username).orElseThrow(() -> new UserNotFoundException("user not found!"));
+        return userRepository.findUserByuserName(username).orElseThrow(() -> new UserNotFoundException("user not found!"));
 
     }
 

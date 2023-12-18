@@ -24,6 +24,12 @@ public class Post {
     @ManyToOne(cascade =CascadeType.ALL,  fetch = FetchType.LAZY)
     @JoinColumn(name = "user_Id", insertable = false, updatable = false)
     private User user;
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+            name = "Post_LikedUsers",
+            joinColumns = { @JoinColumn(name = "post_id") },
+            inverseJoinColumns = { @JoinColumn(name = "user_id") }
+    )
     private List<User> likedUsers;
     @ManyToOne(cascade =CascadeType.ALL,  fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_Id", insertable = false, updatable = false)

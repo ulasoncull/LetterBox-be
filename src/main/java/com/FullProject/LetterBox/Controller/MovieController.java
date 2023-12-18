@@ -13,6 +13,7 @@ public class MovieController {
     private final MovieService movieService;
 
     public MovieController(MovieService movieService) {
+
         this.movieService = movieService;
     }
 
@@ -31,7 +32,7 @@ public class MovieController {
     }
     @GetMapping ("/{title}")
     public  ResponseEntity<Movie> getMovieByTitle(@PathVariable String title){
-        return new ResponseEntity.ok(movieService.getMovieByTitle(title));
+        return  ResponseEntity.ok(movieService.getMovieByTitle(title));
     }
 
 }

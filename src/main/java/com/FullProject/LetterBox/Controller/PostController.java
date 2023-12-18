@@ -29,6 +29,7 @@ public class PostController {
     public ResponseEntity<Post> createPost(@Valid @RequestBody Post post){
         return ResponseEntity.ok(postService.createPost(post));
     }
+
     @PostMapping("/like")
     public ResponseEntity<Post> addLike(@RequestBody@Valid LikeRequest likeRequest){
         return ResponseEntity.ok(postService.addLike(likeRequest));
@@ -38,5 +39,5 @@ public class PostController {
         return  ResponseEntity.ok(postService.removeLike(likeRequest));
     }
 
-
+    
 }
