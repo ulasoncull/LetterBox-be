@@ -22,7 +22,7 @@ public class Director {
     private String wikipediaUrl;
     private Gender gender;
     private String dateOfBirth;
-    @OneToMany(mappedBy = "director",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Movie> movies;
+
+
 
 }

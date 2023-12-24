@@ -1,5 +1,7 @@
 package com.FullProject.LetterBox.Controller;
 
+import com.FullProject.LetterBox.Dto.MovieDto;
+import com.FullProject.LetterBox.Dto.PostDto;
 import com.FullProject.LetterBox.Model.Movie;
 import com.FullProject.LetterBox.Service.MovieService;
 import org.springframework.http.ResponseEntity;
@@ -17,23 +19,23 @@ public class MovieController {
         this.movieService = movieService;
     }
 
-    @PostMapping
-    public ResponseEntity<Movie> createMovie(Movie movie){
-    return ResponseEntity.ok(movieService.createMovie(movie));
-    }
-
     @GetMapping
-    public  ResponseEntity<List<Movie>> getAllMovies() {
+    public  ResponseEntity<List<MovieDto>> getAllMovies() {
         return ResponseEntity.ok(movieService.getAllMovies());
     }
     @GetMapping ("/{id}")
-    public  ResponseEntity<Movie> getMovieById(@PathVariable Long id){
+    public  ResponseEntity<MovieDto> getMovieById(@PathVariable Long id){
         return ResponseEntity.ok(movieService.getMovieById(id));
     }
-    @GetMapping ("/{title}")
+    @GetMapping ("/all/{title}")
     public  ResponseEntity<Movie> getMovieByTitle(@PathVariable String title){
         return  ResponseEntity.ok(movieService.getMovieByTitle(title));
     }
+    @GetMapping("/{movieId}/posts")
+    public ResponseEntity<List<PostDto>> getMoviePosts(@PathVariable Long movieId) {
+        return ResponseEntity.ok(movieService.findPostsByMovieId(movieId));
+    }
+
 
 }
 

@@ -8,6 +8,6 @@ import lombok.Data;
 @Data
 @Builder
 public class LikeRequest {
-    private Post post;
-    private User user;
+    private Long postId;
+    private String userName;
 }

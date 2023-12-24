@@ -1,5 +1,8 @@
 package com.FullProject.LetterBox.Model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,14 +18,15 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 
+
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
     private String text;
     private LocalDateTime createDate;
-    @ManyToOne(cascade =CascadeType.ALL,  fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_Id", insertable = false, updatable = false)
+    @ManyToOne(cascade =CascadeType.ALL)
+    @JoinColumn(name = "user_Id")
     private User user;
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
@@ -32,8 +36,6 @@ public class Post {
     )
     private List<User> likedUsers;
     @ManyToOne(cascade =CascadeType.ALL,  fetch = FetchType.LAZY)
-    @JoinColumn(name = "movie_Id", insertable = false, updatable = false)
+    @JoinColumn(name = "movie_Id")
     private Movie movie;
-
-
 }

@@ -1,8 +1,9 @@
 package com.FullProject.LetterBox.Controller;
 
 import com.FullProject.LetterBox.Dto.CreateUserRequest;
+import com.FullProject.LetterBox.Dto.PostDto;
 import com.FullProject.LetterBox.Dto.UserDto;
-import com.FullProject.LetterBox.Model.User;
+import com.FullProject.LetterBox.Service.PostService;
 import com.FullProject.LetterBox.Service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,8 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    public UserController(UserService userService) {
+
+    public UserController(UserService userService ) {
         this.userService = userService;
     }
 
@@ -37,4 +39,8 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
+    @GetMapping("/{userId}/posts")
+    public ResponseEntity<List<PostDto>> getUserPosts(@PathVariable Long userId) {
+        return ResponseEntity.ok(userService.findPostsByUserId(userId));
+    }
 }

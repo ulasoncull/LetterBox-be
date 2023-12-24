@@ -9,6 +9,6 @@ public class UserDtoConverter {
         return UserDto.builder().Id(user.getId())
                 .userName(user.getUserName())
                 .email(user.getEmail())
-                .posts(user.getPosts()).build();
+                .build();
     }
 }

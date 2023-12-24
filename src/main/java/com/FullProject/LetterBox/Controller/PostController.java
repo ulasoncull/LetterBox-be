@@ -1,6 +1,8 @@
 package com.FullProject.LetterBox.Controller;
 
+import com.FullProject.LetterBox.Dto.CreatePost;
 import com.FullProject.LetterBox.Dto.LikeRequest;
+import com.FullProject.LetterBox.Dto.PostDto;
 import com.FullProject.LetterBox.Model.Post;
 import com.FullProject.LetterBox.Service.PostService;
 import jakarta.validation.Valid;
@@ -18,26 +20,25 @@ public class PostController {
         this.postService = postService;
     }
     @GetMapping("/{postId}")
-    public ResponseEntity<Post> getPostById(@PathVariable Long id){
+    public ResponseEntity<PostDto> getPostById(@PathVariable Long id){
         return ResponseEntity.ok(postService.getPostById(id));
     }
     @GetMapping
-    public ResponseEntity<List<Post>> getAllPost(){
+    public ResponseEntity<List<PostDto>> getAllPost(){
         return ResponseEntity.ok(postService.getAllPosts());
     }
     @PostMapping
-    public ResponseEntity<Post> createPost(@Valid @RequestBody Post post){
+    public ResponseEntity<PostDto> createPost(@Valid @RequestBody CreatePost post){
         return ResponseEntity.ok(postService.createPost(post));
     }
 
     @PostMapping("/like")
-    public ResponseEntity<Post> addLike(@RequestBody@Valid LikeRequest likeRequest){
+    public ResponseEntity<PostDto> addLike(@RequestBody@Valid LikeRequest likeRequest){
         return ResponseEntity.ok(postService.addLike(likeRequest));
     }
     @DeleteMapping("/like")
-    public ResponseEntity<?> deleteLike(@RequestBody @Valid LikeRequest likeRequest ){
+    public ResponseEntity<PostDto> deleteLike(@RequestBody @Valid LikeRequest likeRequest ){
         return  ResponseEntity.ok(postService.removeLike(likeRequest));
     }
 
-    
 }

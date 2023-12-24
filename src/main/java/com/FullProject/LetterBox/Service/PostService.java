@@ -1,7 +1,11 @@
 package com.FullProject.LetterBox.Service;
 
+import com.FullProject.LetterBox.Dto.CreatePost;
 import com.FullProject.LetterBox.Dto.LikeRequest;
+import com.FullProject.LetterBox.Dto.PostDto;
+import com.FullProject.LetterBox.Dto.PostDtoConverter;
 import com.FullProject.LetterBox.Exception.PostNotFoundException;
+import com.FullProject.LetterBox.Model.Movie;
 import com.FullProject.LetterBox.Model.Post;
 import com.FullProject.LetterBox.Model.User;
 import com.FullProject.LetterBox.Repository.PostRepository;
@@ -16,52 +20,61 @@ import java.util.stream.Collectors;
 public class PostService {
     private final PostRepository postRepository;
     private final UserService userService;
-
-    public PostService(PostRepository postRepository, UserService userService) {
+    private final MovieService movieService;
+    private final PostDtoConverter postDtoConverter;
+    public PostService(PostRepository postRepository, UserService userService, MovieService movieService, PostDtoConverter postDtoConverter) {
         this.postRepository = postRepository;
         this.userService = userService;
+        this.movieService = movieService;
+        this.postDtoConverter = postDtoConverter;
     }
 
 
-    public Post getPostById(Long id){
-        return postRepository.findById(id).orElseThrow(() -> new PostNotFoundException("Post could not found"));
+    public PostDto getPostById(Long id){
+        Post post = postRepository.findById(id).orElseThrow(() -> new PostNotFoundException("Post could not found"));
+        return postDtoConverter.convert(post);
+
     }
 
-    public List<Post> getAllPosts() {
-        return postRepository.findAll();
+
+
+    public List<PostDto> getAllPosts() {
+        return postRepository.findAll().stream().map(postDtoConverter::convert).collect(Collectors.toList());
     }
-    public Post createPost(Post post){
-        User user = userService.getUserByUsername(post.getUser().getUserName());
-        post.setUser(user);
-        post.setCreateDate(LocalDateTime.now());
-        //post.setLikedUsers(new ArrayList<>());
-        return postRepository.save(post);
+    public PostDto createPost(CreatePost postRequest){
+        User user = userService.getUserByUsername(postRequest.getUserName());
+        Movie movie = movieService.getMovieByTitle(postRequest.getMovieName());
+        Post post = Post.builder()
+                .text(postRequest.getText())
+                .createDate(LocalDateTime.now())
+                .movie(movie)
+                .user(user)
+                .likedUsers(new ArrayList<>())
+                .build();
+
+        return postDtoConverter.convert(postRepository.save(post));
     }
 
-    public Post addLike(LikeRequest likeRequest){
-        Post post = getPostById(likeRequest.getPost().getId());
-        User postOfUser = post.getUser();
-        User likedUser = userService.getUserByUsername(likeRequest.getUser().getUserName());
-        if (post.getLikedUsers() != null && userService.isUserContains(post.getLikedUsers(), likeRequest.getUser().getUserName())) {
-           // log.info("call remove like: " + likeRequest.getUser().getUserName());
+    public PostDto addLike(LikeRequest likeRequest){
+        Post post = postRepository.findById(likeRequest.getPostId()).orElseThrow(() -> new PostNotFoundException("Post could not found"));
+        User likedUser = userService.getUserByUsername(likeRequest.getUserName());
+        if (post.getLikedUsers() != null && userService.isUserContains(post.getLikedUsers(), likeRequest.getUserName())) {
+           //log.info("call remove like: " + likeRequest.getUser().getUserName());
             return removeLike(likeRequest);
         }
         post.getLikedUsers().add(likedUser);
-        return postRepository.save(post);
+        return postDtoConverter.convert(postRepository.save(post));
     }
 
-    public Post removeLike(LikeRequest likeRequest) {
-        Post post = getPostById(likeRequest.getPost().getId());
-        User postOfUser = post.getUser();
-        User unLikedUser = userService.getUserByUsername(likeRequest.getUser().getUserName());
+    public PostDto removeLike(LikeRequest likeRequest) {
+        Post post = postRepository.findById(likeRequest.getPostId()).orElseThrow(() -> new PostNotFoundException("Post could not found"));
+        User unLikedUser = userService.getUserByUsername(likeRequest.getUserName());
         var updatedLikes = post.getLikedUsers()
                 .stream()
                 .filter(x -> !x.getUserName().equals(unLikedUser.getUserName()))
                 .collect(Collectors.toList());
         post.setLikedUsers(updatedLikes);
-        return postRepository.save(post);
+        return postDtoConverter.convert(postRepository.save(post));
     }
-
-
 
 }

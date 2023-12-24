@@ -22,8 +22,7 @@ public class Actor {
     private String wikipediaUrl;
     private Gender gender;
     private String dateOfBirth;
-    @ManyToMany(mappedBy = "actors")
-    private List<Movie> movies;
+
 
 
 }

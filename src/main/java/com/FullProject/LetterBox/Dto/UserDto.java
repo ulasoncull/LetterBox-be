@@ -15,5 +15,4 @@ public class UserDto {
     private String userName;
     @NotNull(message = "E-mail  must not be empty")
     private String email;
-    private List<Post> posts;
 }

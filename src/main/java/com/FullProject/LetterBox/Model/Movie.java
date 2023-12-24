@@ -1,5 +1,7 @@
 package com.FullProject.LetterBox.Model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,23 +18,13 @@ import java.util.List;
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
     private String title;
     private String releaseDate;
-    private Float rate;
+    private Double rate;
     private String description;
-    private Genres genres;
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Post> posts;
-    @ManyToMany(cascade = { CascadeType.ALL })
-    @JoinTable(
-            name = "Movie_Actors",
-            joinColumns = { @JoinColumn(name = "movie_id") },
-            inverseJoinColumns = { @JoinColumn(name = "actor_id") }
-    )
-    private List<Actor> actors;
-    @ManyToOne(cascade =CascadeType.ALL,  fetch = FetchType.LAZY)
-    @JoinColumn(name = "director_Id", insertable = false, updatable = false)
-    private Director director;
-
+    private List<String> genres;
+    private String imageUrl;
+    private Double runTime;
+    private Double voteAverage;
 }
