@@ -29,7 +29,9 @@ public class UserService {
     public UserDto create(CreateUserRequest createUserRequest){
         User user = User.builder()
                 .userName(createUserRequest.getUserName())
-                .email(createUserRequest.getEmail()).build();
+                .email(createUserRequest.getEmail())
+                .password(createUserRequest.getPassword())
+                .build();
 
         return userDtoConverter.convert(userRepository.save(user));
     }
@@ -46,6 +48,13 @@ public class UserService {
         return userRepository.findUserByuserName(username).orElseThrow(() -> new UserNotFoundException("user not found!"));
 
     }
+
+    public UserDto getUserFromUsername(String username) {
+        User user = userRepository.findUserByuserName(username).orElseThrow(() -> new UserNotFoundException("user could not found"));
+        return userDtoConverter.convert(user);
+    }
+
+
     public List<PostDto> findPostsByUserId(Long userId) {
         List<Post> posts = postRepository.findByUserId(userId);
         return posts.stream().map(postDtoConverter::convert).collect(Collectors.toList());

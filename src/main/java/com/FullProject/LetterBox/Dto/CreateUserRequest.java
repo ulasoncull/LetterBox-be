@@ -11,4 +11,6 @@ public class CreateUserRequest {
     private String userName;
     @NotNull(message = "E-mail  must not be empty")
     private String email;
+    @NotNull(message = "password cannot be empty")
+    private String password;
 }
