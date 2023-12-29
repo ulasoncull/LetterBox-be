@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin
 public class UserController {
     private final UserService userService;
 
@@ -30,9 +31,9 @@ public class UserController {
     public void deleteUser(@PathVariable Long id){
         userService.delete(id);
     }
-    @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable Long id){
-        return ResponseEntity.ok(userService.getUser(id));
+    @GetMapping("/{userName}")
+    public ResponseEntity<UserDto> getUserByUserName(@PathVariable String userName){
+        return ResponseEntity.ok(userService.getUserFromUsername(userName));
     }
     @GetMapping
     public ResponseEntity<List<UserDto>> getAllUsers(){

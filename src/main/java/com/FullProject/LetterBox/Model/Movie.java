@@ -22,6 +22,8 @@ public class Movie {
     private String title;
     private String releaseDate;
     private Double rate;
+    @Lob
+    @Column(name = "description")
     private String description;
     private List<String> genres;
     private String imageUrl;

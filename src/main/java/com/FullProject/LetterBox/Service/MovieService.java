@@ -54,13 +54,16 @@ public class MovieService {
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
-                .url("https://api.themoviedb.org/3/movie/157336?language=en-US")
+                .url("https://api.themoviedb.org/3/movie/"+movieId+"?language=en-US")
                 .get()
                 .addHeader("accept", "application/json")
                 .addHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4MjVkYmNjMTcyMGViZTQxMGE1ZDA3MWFjZWEwZTYyOCIsInN1YiI6IjY1ODA3NDFkOGRiYzMzMDhiMDk5YTc4ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.mc9UhAumFSlejA8UyfvmmNzlI_I1T23qoaawrab5AT4")
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                throw new IOException("Unexpected code " + response.code());
+            }
             // Yanıttan JSON gövdesini al
             String jsonResponse = response.body().string();
 
@@ -86,7 +89,7 @@ public class MovieService {
             movie.setGenres(genres);
             ; // 'Movie' sınıfınızda 'genres' bir alan olarak tanımlanmalıdır
         }
-        movie.setImageUrl(jsonNode.path("poster_path").asText());
+        movie.setImageUrl("https://image.tmdb.org/t/p/original/"+jsonNode.path("poster_path").asText());
         movie.setRunTime(jsonNode.path("runtime").asDouble());
         movie.setVoteAverage(jsonNode.path("vote_average").asDouble());
         return movieRepository.save(movie);

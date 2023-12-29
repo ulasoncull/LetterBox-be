@@ -1,0 +1,1 @@
+ALTER TABLE movie MODIFY description TEXT;
