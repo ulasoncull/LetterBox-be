@@ -56,7 +56,14 @@ public class UserService {
 
 
     public List<PostDto> findPostsByUserId(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("user could not found"));
         List<Post> posts = postRepository.findByUserId(userId);
+        return posts.stream().map(postDtoConverter::convert).collect(Collectors.toList());
+    }
+
+    public List<PostDto> findPostsByuserName(String userName) {
+        User user = userRepository.findUserByuserName(userName).orElseThrow(() -> new UserNotFoundException("user could not found"));
+        List<Post> posts = postRepository.findByUserName(userName);
         return posts.stream().map(postDtoConverter::convert).collect(Collectors.toList());
     }
 

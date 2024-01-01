@@ -42,6 +42,7 @@ public class LoginRegisterController {
     public ResponseEntity<UserDto> login(@RequestBody LoginRequest loginRequest) {
 
         if(userRepository.findUserByuserName(loginRequest.getUserName()).isPresent() && passwordEncoder().matches(loginRequest.getPassword(), userService.getUserByUsername(loginRequest.getUserName()).getPassword())){
+
             return ResponseEntity.ok(userService.getUserFromUsername(loginRequest.getUserName()));
         }
         else{

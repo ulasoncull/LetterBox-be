@@ -44,4 +44,8 @@ public class UserController {
     public ResponseEntity<List<PostDto>> getUserPosts(@PathVariable Long userId) {
         return ResponseEntity.ok(userService.findPostsByUserId(userId));
     }
+    @GetMapping("/{userName}/post")
+        public ResponseEntity<List<PostDto>> getUserPostsByUsername(@PathVariable String userName) {
+        return ResponseEntity.ok(userService.findPostsByuserName(userName));
+    }
 }

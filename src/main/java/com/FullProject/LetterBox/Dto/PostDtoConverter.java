@@ -17,6 +17,7 @@ public class PostDtoConverter {
                 .userName(post.getUser().getUserName())
                 .movieId(post.getMovie().getId())
                 .movieTitle(post.getMovie().getTitle())
+                .imageUrl(post.getMovie().getImageUrl())
                 .likedUserIds(post.getLikedUsers().stream().map(User::getId).collect(Collectors.toList()))
                 .build();
     }
