@@ -18,4 +18,5 @@ public class PostDto {
     private String movieTitle;
     private String imageUrl;
     private List<Long> likedUserIds;
+    private Integer numberOfLiked;
 }
