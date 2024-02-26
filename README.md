@@ -1,0 +1,1 @@
+This is a movie tracker web application that we developed with Spring boot technology, where users can post their opinions about movies, other users can like or comment on them, and users have profiles.
