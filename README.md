@@ -4,9 +4,9 @@ LetterBox is a web application that we developed with Spring boot technology, wh
 
 Technologies
 
-    Java 17
-    Spring Boot 3.2
-	  RESTful API
+    	Java 17
+	    Spring Boot 3.2
+	 RESTful API
  	  Stream API
   	Tomcat
    	Hibernate
